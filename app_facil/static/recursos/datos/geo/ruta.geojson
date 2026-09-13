@@ -1,0 +1,163 @@
+{
+"type": "FeatureCollection",
+"name": "Ruta_Ecologica_Popayan_Purace",
+"crs": {
+"type": "name",
+"properties": {
+"name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+}
+},
+"features": [
+{
+"type": "Feature",
+"id": "ruta_principal_01",
+"properties": {
+"nombre": "Ruta Ecológica y Geoturística Popayán - PNN Puracé",
+"tipo": "Trazado Eco-Turístico",
+"distancia_km": 45.5,
+"dificultad": "Moderada - Alta",
+"tiempo_estimado": "1 a 2 días",
+"descripcion": "Recorrido que conecta el patrimonio histórico cultural de Popayán con la biodiversidad de alto páramo y vulcanismo del Parque Nacional Natural Puracé en la Cordillera Central colombiana.",
+"recomendaciones": [
+"Llevar ropa abrigada e impermeable para clima de páramo",
+"Acudir con guía local indígena autorizado",
+"Calzado con buen agarre para terreno húmedo"
+]
+},
+"geometry": {
+"type": "LineString",
+"coordinates": [
+[-76.6063, 2.4419, 1760],
+[-76.5800, 2.4350, 1820],
+[-76.5400, 2.4100, 1980],
+[-76.4950, 2.3486, 2400],
+[-76.4500, 2.3400, 2750],
+[-76.4100, 2.3450, 3100],
+[-76.3880, 2.3380, 3300],
+[-76.3950, 2.3450, 3450],
+[-76.3900, 2.3250, 3350],
+[-76.4010, 2.3175, 4646]
+]
+}
+},
+{
+"type": "Feature",
+"id": "poi_01",
+"properties": {
+"nombre": "Parque Caldas - Centro Histórico de Popayán",
+"categoria": "Patrimonio / Punto de Partida",
+"elevacion_msnm": 1760,
+"municipio": "Popayán",
+"descripcion": "Corazón de la 'Ciudad Blanca', caracterizado por su arquitectura colonial. Punto inicial para aprovisionamiento y salida hacia la cadena volcánica.",
+"actividades": ["Turismo cultural", "Fotografía", "Aprovisionamiento de equipo"],
+"horario_acceso": "Libre"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-76.6063, 2.4419, 1760]
+}
+},
+{
+"type": "Feature",
+"id": "poi_02",
+"properties": {
+"nombre": "Termales de Agua Hirviendo (Coconuco)",
+"categoria": "Termalismo / Bienestar",
+"elevacion_msnm": 2400,
+"municipio": "Puracé (Coconuco)",
+"descripcion": "Fuentes termales azufradas administradas por el Cabildo Indígena de Coconuco, aptas para el descanso y baño recreativo.",
+"actividades": ["Baño termal medicinal", "Ecoturismo comunitario", "Gastronomía local"],
+"horario_acceso": "08:00 - 17:00"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-76.4950, 2.3486, 2400]
+}
+},
+{
+"type": "Feature",
+"id": "poi_03",
+"properties": {
+"nombre": "Mirador del Cóndor de los Andes",
+"categoria": "Avistamiento de Fauna",
+"elevacion_msnm": 3250,
+"municipio": "Puracé",
+"descripcion": "Lugar estratégico dentro del PNN Puracé donde la comunidad indígena dispone de una plataforma para la observación del Vultur gryphus en libertad.",
+"actividades": ["Avistamiento de aves", "Educación ambiental", "Fotografía de fauna"],
+"horario_acceso": "08:00 - 11:00 (Mejor horario de avistamiento)"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-76.4020, 2.3520, 3250]
+}
+},
+{
+"type": "Feature",
+"id": "poi_04",
+"properties": {
+"nombre": "Termales de San Juan",
+"categoria": "Geoturismo / Paisaje",
+"elevacion_msnm": 3300,
+"municipio": "Puracé",
+"descripcion": "Espectacular conjunto de pozas termales con tonalidades turquesas, verdes y cobrizas debido a la alta concentración de azufre y minerales. No es apto para baño debido a altas temperaturas y acidez.",
+"actividades": ["Fotografía de naturaleza", "Senderismo interpretativo", "Observación geológica"],
+"horario_acceso": "08:00 - 16:00"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-76.3880, 2.3380, 3300]
+}
+},
+{
+"type": "Feature",
+"id": "poi_05",
+"properties": {
+"nombre": "Sendero Valle de los Frailejones",
+"categoria": "Senderismo / Páramo",
+"elevacion_msnm": 3450,
+"municipio": "Puracé",
+"descripcion": "Camino adecuado para recorrer un denso ecosistema de frailejones (Espeletia hartwegiana) y musgos, vitales para el ciclo hídrico de la región.",
+"actividades": ["Senderismo ecológico", "Interpretación ambiental", "Fotografía"],
+"horario_acceso": "08:00 - 15:00"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-76.3950, 2.3450, 3450]
+}
+},
+{
+"type": "Feature",
+"id": "poi_06",
+"properties": {
+"nombre": "Centro de Visitantes Pilimbalá / Base Volcán Puracé",
+"categoria": "Base de Alta Montaña",
+"elevacion_msnm": 3350,
+"municipio": "Puracé",
+"descripcion": "Punto de registro obligatorio para el ascenso al cráter del Volcán Puracé. Cuenta con zona de parqueo y guías del Cabildo de Puracé.",
+"actividades": ["Registro de montañistas", "Contratación de guías", "Aclimatación"],
+"horario_acceso": "06:00 - 09:00 (Para inicios de ascenso)"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-76.3900, 2.3250, 3350]
+}
+},
+{
+"type": "Feature",
+"id": "poi_07",
+"properties": {
+"nombre": "Cráter del Volcán Puracé",
+"categoria": "Alta Montaña / Geoturismo",
+"elevacion_msnm": 4646,
+"municipio": "Puracé",
+"descripcion": "Cúspide del estratovolcán activo Puracé. Ofrece vistas de la cadena volcánica de los Coconucos y emisión de fumarolas.",
+"actividades": ["Montañismo", "Fotografía de alta montaña", "Observación volcánica"],
+"horario_acceso": "Sujeto a condiciones climáticas y estado de alerta del volcán"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-76.4010, 2.3175, 4646]
+}
+}
+]
+}

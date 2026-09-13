@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transferencias</title>
+</head>
+<body>
+    <div class='contenedor'>
+        <h1>GET y POST con Django</h1>
+        <!--GET-->
+        <section class='card'>
+            <h2>GET</h2>
+            <form method='GET'>
+                <input
+                type='text'
+                name='dato'
+                placeholder='CodeRider'
+                required
+                >
+                <button type='submit'>
+                    Enviar GET 
+                </button>
+            </form>
+        </section>
+
+        <!--POST-->
+        <section class='card'>
+            <h2>POST</h2>
+            <form method='POST'>
+                {% csrf_token %}
+                <input
+                type='text'
+                name='dato'
+                placeholder='CodeRider'
+                required
+                >
+                <button type='submit'>
+                    Enviar POST 
+                </button>
+            </form>
+        </section>
+    <!--RESULTADO-->
+    <section class='resultado'>
+        <h2>Resultado</h2>
+        {%if resultado%}
+        {{resultado|safe}}
+        {%else%}
+        <p>
+            Aqui veras el resultado...
+        </p>
+        {%endif%}
+    </section>
+</div>
+</body>
+</html>

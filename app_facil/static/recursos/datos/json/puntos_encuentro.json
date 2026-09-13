@@ -1,0 +1,193 @@
+{
+"ciudad": "Popayán",
+"departamento": "Cauca",
+"pais": "Colombia",
+"sistema_referencia": "EPSG:4326 (WGS 84)",
+"fecha_actualizacion": "2026-09-09",
+"entidad_coordinadora": "Unidad Municipal para la Gestión del Riesgo de Desastres (UMGRD - Popayán)",
+"puntos_de_encuentro": [
+{
+"id": "PE-POP-001",
+"nombre": "Parque Caldas - Centro Histórico",
+"tipo": "Punto de Encuentro Primario",
+"ubicacion": {
+"comuna": "Comuna 4",
+"barrio_sector": "Centro Histórico",
+"direccion": "Calle 4 con Carrera 6 / Carrera 7",
+"coordenadas": {
+"latitud": 2.4419,
+"longitud": -76.6063,
+"elevacion_msnm": 1760.0
+}
+},
+"capacidad": {
+"aforo_maximo_personas": 8000,
+"area_m2": 12500
+},
+"evaluacion_riesgo": {
+"nivel_riesgo_zona": "Bajo",
+"amenaza_edificaciones_colindantes": "Moderada (estructuras de valor patrimonial de 1-2 pisos)",
+"riesgo_inundacion": "Muy Bajo"
+},
+"equipamiento_y_servicios": [
+"Amplia zona peatonal descubierta",
+"Acceso directo a vías principales (Calle 5 y Carrera 6)",
+"Iluminación pública y respaldo de red eléctrica cercana",
+"Cercanía a sedes institucionales de respuesta"
+],
+"accesibilidad_pmr": true,
+"contactos_emergencia": {
+"responsable": "Estación Central Bomberos Popayán",
+"telefono_emergencias": "119",
+"canal_radio_vhf": "155.200 MHz"
+},
+"observaciones": "Punto de reunión inicial para residentes, comerciantes y visitantes del sector céntrico. Mantener distancia prudente de fachadas e iglesias en sísmica."
+},
+{
+"id": "PE-POP-002",
+"nombre": "Plazuela Mosquera",
+"tipo": "Punto de Encuentro Intermedio / Triaje",
+"ubicacion": {
+"comuna": "Comuna 4",
+"barrio_sector": "Sector San Francisco - Caldas",
+"direccion": "Carrera 3 con Calle 3",
+"coordenadas": {
+"latitud": 2.4468,
+"longitud": -76.6038,
+"elevacion_msnm": 1748.0
+}
+},
+"capacidad": {
+"aforo_maximo_personas": 2500,
+"area_m2": 3800
+},
+"evaluacion_riesgo": {
+"nivel_riesgo_zona": "Bajo",
+"amenaza_edificaciones_colindantes": "Baja",
+"riesgo_inundacion": "Bajo"
+},
+"equipamiento_y_servicios": [
+"Punto de consolidación de grupos en evacuación",
+"Espacio para puesto de mando avanzado",
+"Acceso expedito hacia el Hospital Universitario San José"
+],
+"accesibilidad_pmr": true,
+"contactos_emergencia": {
+"responsable": "Cruz Roja Colombiana - Seccional Cauca",
+"telefono_emergencias": "132",
+"canal_radio_vhf": "148.500 MHz"
+},
+"observaciones": "Sirve como estación de paso y triaje previo durante la evacuación masiva hacia el corredor norte."
+},
+{
+"id": "PE-POP-003",
+"nombre": "Complejo Deportivo Villa Olímpica",
+"tipo": "Zona Segura Principal y Albergue Temporal",
+"ubicacion": {
+"comuna": "Comuna 2",
+"barrio_sector": "Villa Olímpica / Norte",
+"direccion": "Carrera 9 con Calle 25N",
+"coordenadas": {
+"latitud": 2.4565,
+"longitud": -76.5975,
+"elevacion_msnm": 1732.0
+}
+},
+"capacidad": {
+"aforo_maximo_personas": 15000,
+"area_m2": 45000
+},
+"evaluacion_riesgo": {
+"nivel_riesgo_zona": "Muy Bajo",
+"amenaza_edificaciones_colindantes": "Nula (amplias áreas verdes y coliseos aislados)",
+"riesgo_inundacion": "Nulo"
+},
+"equipamiento_y_servicios": [
+"Canchas abiertas y coliseo cubierto",
+"Baterías sanitarias públicas masivas",
+"Punto de suministro de agua potable y cocinas de campaña",
+"Zona habilitada para helipuerto de rescate",
+"Puesto de recepción y empadronamiento de evacuados"
+],
+"accesibilidad_pmr": true,
+"contactos_emergencia": {
+"responsable": "Defensa Civil Colombiana - Seccional Cauca",
+"telefono_emergencias": "144",
+"canal_radio_vhf": "142.100 MHz"
+},
+"observaciones": "Destino final del corredor de evacuación centro-norte. Zona con infraestructura para alojamiento temporal prolongado."
+},
+{
+"id": "PE-POP-004",
+"nombre": "Parque de la Salud / Sector San José",
+"tipo": "Zona de Soporte Médico y Concentración",
+"ubicacion": {
+"comuna": "Comuna 3",
+"barrio_sector": "Bolívar - Hospital",
+"direccion": "Carrera 6 con Calle 10N",
+"coordenadas": {
+"latitud": 2.4485,
+"longitud": -76.6010,
+"elevacion_msnm": 1746.0
+}
+},
+"capacidad": {
+"aforo_maximo_personas": 3500,
+"area_m2": 5500
+},
+"evaluacion_riesgo": {
+"nivel_riesgo_zona": "Bajo",
+"amenaza_edificaciones_colindantes": "Baja",
+"riesgo_inundacion": "Bajo"
+},
+"equipamiento_y_servicios": [
+"Colindancia inmediata con el Hospital Universitario San José",
+"Bahía de parqueo de ambulancias y vehículos prioritarios",
+"Zona verde de reposo y clasificación médica rápida"
+],
+"accesibilidad_pmr": true,
+"contactos_emergencia": {
+"responsable": "CRUE Cauca / Centro Regulador de Urgencias",
+"telefono_emergencias": "123",
+"canal_radio_vhf": "150.000 MHz"
+},
+"observaciones": "Reservado prioritariamente para apoyo logístico sanitario y recepción de lesionados leves o en tránsito hacia urgencias."
+},
+{
+"id": "PE-POP-005",
+"nombre": "Polideportivo San Eduardo",
+"tipo": "Punto de Encuentro Comunal",
+"ubicacion": {
+"comuna": "Comuna 5",
+"barrio_sector": "San Eduardo",
+"direccion": "Calle 5 Sur con Carrera 15",
+"coordenadas": {
+"latitud": 2.4310,
+"longitud": -76.6150,
+"elevacion_msnm": 1770.0
+}
+},
+"capacidad": {
+"aforo_maximo_personas": 4000,
+"area_m2": 6200
+},
+"evaluacion_riesgo": {
+"nivel_riesgo_zona": "Bajo",
+"amenaza_edificaciones_colindantes": "Muy Baja",
+"riesgo_inundacion": "Nulo"
+},
+"equipamiento_y_servicios": [
+"Cancha múltiple con cerramiento",
+"Punto de recarga de agua comunitaria",
+"Acceso para ambulancias por la Variante Sur"
+],
+"accesibilidad_pmr": true,
+"contactos_emergencia": {
+"responsable": "Junta de Acción Comunal / UMGRD",
+"telefono_emergencias": "123",
+"canal_radio_vhf": "155.200 MHz"
+},
+"observaciones": "Punto estratégico para la evacuación comunitaria de los barrios de la zona suroccidental."
+}
+]
+}

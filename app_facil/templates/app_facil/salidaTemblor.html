@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Sismos Registrados</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .contenedor {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 900px;
+        }
+        h1 {
+            color: #d9534f;
+            text-align: center;
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #0056b3;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .boton-volver {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #0056b3;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .boton-volver:hover {
+            background-color: #004494;
+        }
+        .sin-datos {
+            text-align: center;
+            color: #777;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor">
+        <h1>Historial de Sismos Registrados</h1>
+
+        {% if sismos %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Magnitud</th>
+                        <th>Lugar</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Profundidad</th>
+                        <th>Área</th>
+                        <th>Rango</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sismo in sismos %}
+                        <tr>
+                            <td><strong>{{ sismo.magnitud }}</strong></td>
+                            <td>{{ sismo.lugar }}</td>
+                            <td>{{ sismo.fecha }}</td>
+                            <td>{{ sismo.hora }}</td>
+                            <td>{{ sismo.profundidad }} km</td>
+                            <td>{{ sismo.area }}</td>
+                            <td>{{ sismo.rango }} km</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="sin-datos">No hay sismos registrados en la base de datos.</p>
+        {% endif %}
+
+        <div style="text-align: center;">
+            <a href="{% url 'temblor' %}" class="boton-volver">⬅ Registrar nuevo sismo</a>
+        </div>
+    </div>
+
+</body>
+</html>

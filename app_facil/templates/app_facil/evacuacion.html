@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evacuación</title>
+    <link rel="icon" href="{% static 'recursos/imagenes/sistemas/favicon.png' %}">
+    <link rel="manifest" href="{% static 'recursos/pwa/manifest.json' %}">
+    <link rel="stylesheet" href="{% static '/recursos/estilos/estilo.css' %}">
+    <link rel="stylesheet" href="{% static 'recursos/libs/leaflet/leaflet.css' %}">
+</head>
+<body>
+    <header>
+        <h1>coderider Aplicación</h1>
+    </header>
+
+    <main>
+        <section class="tarjeta">
+            <h2>Imagenes</h2>
+            <img src="{% static 'recursos/imagenes/fotos/plano.jpg' %}" width="250" />
+            <img src="{% static 'recursos/imagenes/iconos/salida.svg' %}" width="60" />
+        </section>
+
+        <section class="tarjeta">
+            <h2>Video</h2>
+            <video width="100%" controls>
+                <source src="{% static 'recursos/videos/clips/simulacro.mp4' %}" type="video/mp4" />
+                <track src="{% static 'recursos/videos/subtitulos/evacuacion.vtt' %}" kind="subtitles" srclang="es" />
+            </video>
+        </section>
+
+        <section class="tarjeta">
+            <h2>Audio</h2>
+            <audio controls>
+                <source src="{% static 'recursos/audios/alerta.mp3' %}" type="audio/mp3" />
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+            <h2>Audio 2</h2>
+            <audio controls>
+                <source src="{% static 'recursos/audios/ayuda.mp3' %}" type="audio/mp3" />
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+        </section>
+
+        <section class="tarjeta">
+            <h2>Documentos</h2>
+            <a href="{% static 'recursos/documentos/pdf/manual.pdf' %}" target="_blank">Manual de Evacuación</a>
+            <a href="{% static 'recursos/documentos/comprimidos/manual.zip' %}" download>Descargar Manual de Evacuación</a>
+            <a href="{% static 'recursos/datos/tablas/extintores.csv' %}" download>Descargar csv</a>
+            <a href="{% static 'recursos/datos/gps/ruta_evacuacion.gpx' %}" download>Descargar GPX</a>
+        </section>
+
+        <section class="tarjeta">
+            <h2>Subir Archivos</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Subir</button>
+            </form>
+        </section>
+
+        <section class="tarjeta">
+            <h2>Reportes</h2>
+            {% for r in reportes %}
+            <div class="reporte">
+                <img src="{{ r.foto.url }}" width="150" />
+                <p><strong>{{ r.nombre }}</strong>: {{ r.descripcion }}</p>
+                <p>{{ r.fecha|date:'d/m/Y H:i' }}</p>
+                {% if r.document %}
+                <a href="{{ r.document.url }}" download>Ver Documento</a>
+                {% endif %}
+            </div>
+            {% empty %}
+            <p>No hay reportes disponibles.</p>
+            {% endfor %}
+        </section>
+    </main>
+</body>
+</html>

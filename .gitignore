@@ -1,0 +1,42 @@
+# Entornos virtuales
+v_facil/
+venv/
+env/
+ENV/
+.venv/
+
+# Base de datos SQLite
+*.sqlite3
+*.db
+db.sqlite3
+
+# Caché y archivos compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Variables de entorno y llaves secretas
+.env
+.env.local
+*.secrets.json
+
+# Archivos multimedia subidos por usuarios
+/media/
+
+# Archivos estáticos recolectados (collectstatic)
+/staticfiles/
+
+# Archivos de registros y logs
+*.log
+
+# Archivos de configuración del IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos basura del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini

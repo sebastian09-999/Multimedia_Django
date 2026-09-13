@@ -1,0 +1,97 @@
+{
+  "name": "Gestión de Emergencias y Recursos Popayán",
+  "short_name": "Gestión Popayán",
+  "description": "Aplicación web interactiva para la consulta de puntos de encuentro, rutas de evacuación e inventarios de emergencia.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#38bdf8",
+  "orientation": "portrait-primary",
+  "lang": "es-CO",
+  "dir": "ltr",
+  "categories": [
+    "utilities",
+    "productivity",
+    "safety"
+  ],
+  "icons": [
+    {
+      "src": "static/recursos/pwa/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "static/recursos/pwa/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "static/recursos/pwa/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "static/recursos/pwa/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "static/recursos/pwa/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "static/recursos/pwa/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "static/recursos/pwa/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Puntos de Encuentro",
+      "short_name": "Puntos",
+      "description": "Ver lista y mapa de puntos de encuentro",
+      "url": "/#puntos",
+      "icons": [
+        {
+          "src": "static/recursos/pwa/shortcut-map.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Ruta de Evacuación",
+      "short_name": "Ruta",
+      "description": "Ver ruta de evacuación activa",
+      "url": "/#ruta",
+      "icons": [
+        {
+          "src": "static/recursos/pwa/shortcut-route.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "static/recursos/imagenes/fotos/Plano.jpg",
+      "sizes": "1080x1920",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Vista móvil de mapa y zonas seguras"
+    }
+  ]
+}
