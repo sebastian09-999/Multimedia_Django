@@ -7,10 +7,20 @@
     <title>Evacuación</title>
     <link rel="icon" href="{% static 'recursos/imagenes/sistemas/favicon.png' %}">
     <link rel="manifest" href="{% static 'recursos/pwa/manifest.json' %}">
-    <link rel="stylesheet" href="{% static '/recursos/estilos/estilo.css' %}">
+    <link rel="stylesheet" href="{% static 'recursos/estilos/estilo.css' %}">
     <link rel="stylesheet" href="{% static 'recursos/libs/leaflet/leaflet.css' %}">
 </head>
 <body>
+    <nav class='navbar'>
+        <div class='nav-contenedor'>
+            <a href="{% url 'evacuacion' %}" class='nav-logo'>coderider</a>
+            <ul class='nav-menu'>
+                <li><a href="{% url 'evacuacion' %}" class='nav-enlace activo'>Generalidades</a></li>
+                <li><a href="{% url 'panel_coderider' %}" class='nav-enlace'>Panel</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <header>
         <h1>coderider Aplicación</h1>
     </header>
@@ -18,15 +28,15 @@
     <main>
         <section class="tarjeta">
             <h2>Imagenes</h2>
-            <img src="{% static 'recursos/imagenes/fotos/plano.jpg' %}" width="250" />
-            <img src="{% static 'recursos/imagenes/iconos/salida.svg' %}" width="60" />
+            <img src="{% static 'recursos/imagenes/fotos/plano.jpg' %}" width="250" alt="Plano de evacuación" />
+            <img src="{% static 'recursos/imagenes/iconos/salida.svg' %}" width="60" alt="Icono salida" />
         </section>
 
         <section class="tarjeta">
             <h2>Video</h2>
             <video width="100%" controls>
                 <source src="{% static 'recursos/videos/clips/simulacro.mp4' %}" type="video/mp4" />
-                <track src="{% static 'recursos/videos/subtitulos/evacuacion.vtt' %}" kind="subtitles" srclang="es" />
+                <track src="{% static 'recursos/videos/subtitulos/evacuacion.vtt' %}" kind="subtitles" srclang="es" label="Español" />
             </video>
         </section>
 
@@ -64,7 +74,7 @@
             <h2>Reportes</h2>
             {% for r in reportes %}
             <div class="reporte">
-                <img src="{{ r.foto.url }}" width="150" />
+                <img src="{{ r.foto.url }}" width="150" alt="Foto reporte" />
                 <p><strong>{{ r.nombre }}</strong>: {{ r.descripcion }}</p>
                 <p>{{ r.fecha|date:'d/m/Y H:i' }}</p>
                 {% if r.document %}
@@ -75,6 +85,60 @@
             <p>No hay reportes disponibles.</p>
             {% endfor %}
         </section>
+
+        <section class="tarjeta">
+    <h2>Trazar Ruta por Coordenadas</h2>
+    <div class="grupo-coordenadas">
+        <div class="campo-input">
+            <label><strong>Punto de Inicio:</strong></label>
+            <input type="number" step="any" id="lat-inicio" placeholder="Latitud (ej: 2.4419)" />
+            <input type="number" step="any" id="lng-inicio" placeholder="Longitud (ej: -76.6063)" />
+        </div>
+        <div class="campo-input">
+            <label><strong>Punto de Destino:</strong></label>
+            <input type="number" step="any" id="lat-destino" placeholder="Latitud (ej: 2.4480)" />
+            <input type="number" step="any" id="lng-destino" placeholder="Longitud (ej: -76.6010)" />
+        </div>
+    </div>
+    <div class="botonera" style="margin-top: 15px;">
+        <button id="btn-trazar-manual" class="btn-mapa btn-verde">Trazar Ruta</button>
+    </div>
+</section>
+
+        <section class='tarjeta'>
+            <h2>Mapa de Ruta + geolocalización</h2>
+            <div class='botonera'>
+                <button id='btn-ruta' class='btn-mapa btn-verde'>
+                    Mostrar ruta + geolocalización
+                </button>
+            </div>
+            <div id='mapa'></div>
+        </section>
+
+        <section class='tarjeta'>
+            <h2>Puntos en mapa</h2>
+            <p id='info-institucion'></p>
+            <div class='botonera'>
+                <button id='btn-puntos' class='btn-mapa btn-azul'>
+                    Mostrar puntos en el mapa
+                </button>
+            </div>
+            <div id='lista-puntos' class='lista-puntos'></div>
+        </section>
     </main>
+
+    <script>
+        const CSRF_TOKEN = '{{ csrf_token }}';
+        const URL_CSV = '{% static "recursos/datos/tablas/extintores.csv" %}';
+        const URL_GEO = '{% static "recursos/datos/geo/ruta.geojson" %}';
+        const URL_JSON = '{% static "recursos/datos/json/puntos_encuentro.json" %}';
+        const URL_API_SISMOS = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson';
+    </script>
+
+    <script src="{% static 'recursos/libs/leaflet/leaflet.js' %}"></script>
+    <script src="{% static 'recursos/scripts/tabla_csv.js' %}"></script>
+    <script src="{% static 'recursos/scripts/puntos_encuentro.js' %}"></script>
+    <script src="{% static 'recursos/scripts/mapa.js' %}"></script>
+    <script src="{% static 'recursos/scripts/sismos_api.js' %}"></script>
 </body>
 </html>

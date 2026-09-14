@@ -8,5 +8,6 @@ urlpatterns = [
     path('salida-temblor',views.salidaTemb, name='salida_temblor'),
     path('buscar-sismos/', views.buscar_sismos, name='buscar_sismos'),
     path('multimedia/', views.multimedia, name='multimedia'),
-    path('evacuacion/', views.evacuacion, name='evacuacion')
+    path('evacuacion/', views.evacuacion, name='evacuacion'),
+    path('panel/', views.panel_coderider, name='panel_coderider'),
 ]

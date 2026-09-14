@@ -106,3 +106,7 @@ def evacuacion(request):
         'form':form,
         'reportes':reportes,
     })
+    
+    
+def panel_coderider(request):
+    return render(request, 'app_facil/panel.html')
