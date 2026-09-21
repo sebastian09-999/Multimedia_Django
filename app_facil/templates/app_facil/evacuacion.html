@@ -4,137 +4,429 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evacuación</title>
+    <title>Centro de Gestión de Evacuación | coderider</title>
+    
+    <!-- Metadatos y PWA -->
     <link rel="icon" href="{% static 'recursos/imagenes/sistemas/favicon.png' %}">
     <link rel="manifest" href="{% static 'recursos/pwa/manifest.json' %}">
-    <link rel="stylesheet" href="{% static 'recursos/estilos/estilo.css' %}">
+    
+    <!-- Fuentes e Iconos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Estilos Leaflet y Propios -->
     <link rel="stylesheet" href="{% static 'recursos/libs/leaflet/leaflet.css' %}">
+    <link rel="stylesheet" href="{% static 'recursos/estilos/estilo.css' %}">
 </head>
 <body>
-    <nav class='navbar'>
-        <div class='nav-contenedor'>
-            <a href="{% url 'evacuacion' %}" class='nav-logo'>coderider</a>
-            <ul class='nav-menu'>
-                <li><a href="{% url 'evacuacion' %}" class='nav-enlace activo'>Generalidades</a></li>
-                <li><a href="{% url 'panel_coderider' %}" class='nav-enlace'>Panel</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <header>
-        <h1>coderider Aplicación</h1>
-    </header>
+    <!-- BOTÓN HAMBURGUESA (Móvil) -->
+    <button id="btn-menu-movil" class="menu-movil-btn" aria-label="Abrir menú">
+        <i class="fa-solid fa-bars"></i>
+    </button>
 
-    <main>
-        <section class="tarjeta">
-            <h2>Imagenes</h2>
-            <img src="{% static 'recursos/imagenes/fotos/plano.jpg' %}" width="250" alt="Plano de evacuación" />
-            <img src="{% static 'recursos/imagenes/iconos/salida.svg' %}" width="60" alt="Icono salida" />
-        </section>
-
-        <section class="tarjeta">
-            <h2>Video</h2>
-            <video width="100%" controls>
-                <source src="{% static 'recursos/videos/clips/simulacro.mp4' %}" type="video/mp4" />
-                <track src="{% static 'recursos/videos/subtitulos/evacuacion.vtt' %}" kind="subtitles" srclang="es" label="Español" />
-            </video>
-        </section>
-
-        <section class="tarjeta">
-            <h2>Audio</h2>
-            <audio controls>
-                <source src="{% static 'recursos/audios/alerta.mp3' %}" type="audio/mp3" />
-                Tu navegador no soporta el elemento de audio.
-            </audio>
-            <h2>Audio 2</h2>
-            <audio controls>
-                <source src="{% static 'recursos/audios/ayuda.mp3' %}" type="audio/mp3" />
-                Tu navegador no soporta el elemento de audio.
-            </audio>
-        </section>
-
-        <section class="tarjeta">
-            <h2>Documentos</h2>
-            <a href="{% static 'recursos/documentos/pdf/manual.pdf' %}" target="_blank">Manual de Evacuación</a>
-            <a href="{% static 'recursos/documentos/comprimidos/manual.zip' %}" download>Descargar Manual de Evacuación</a>
-            <a href="{% static 'recursos/datos/tablas/extintores.csv' %}" download>Descargar csv</a>
-            <a href="{% static 'recursos/datos/gps/ruta_evacuacion.gpx' %}" download>Descargar GPX</a>
-        </section>
-
-        <section class="tarjeta">
-            <h2>Subir Archivos</h2>
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Subir</button>
-            </form>
-        </section>
-
-        <section class="tarjeta">
-            <h2>Reportes</h2>
-            {% for r in reportes %}
-            <div class="reporte">
-                <img src="{{ r.foto.url }}" width="150" alt="Foto reporte" />
-                <p><strong>{{ r.nombre }}</strong>: {{ r.descripcion }}</p>
-                <p>{{ r.fecha|date:'d/m/Y H:i' }}</p>
-                {% if r.document %}
-                <a href="{{ r.document.url }}" download>Ver Documento</a>
-                {% endif %}
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-contenedor">
+                <i class="fa-solid fa-shield-halved logo-icono"></i>
+                <span class="logo-texto">coderider</span>
             </div>
-            {% empty %}
-            <p>No hay reportes disponibles.</p>
-            {% endfor %}
-        </section>
-
-        <section class="tarjeta">
-    <h2>Trazar Ruta por Coordenadas</h2>
-    <div class="grupo-coordenadas">
-        <div class="campo-input">
-            <label><strong>Punto de Inicio:</strong></label>
-            <input type="number" step="any" id="lat-inicio" placeholder="Latitud (ej: 2.4419)" />
-            <input type="number" step="any" id="lng-inicio" placeholder="Longitud (ej: -76.6063)" />
+            <button id="btn-cerrar-sidebar" class="cerrar-sidebar-btn"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        <div class="campo-input">
-            <label><strong>Punto de Destino:</strong></label>
-            <input type="number" step="any" id="lat-destino" placeholder="Latitud (ej: 2.4480)" />
-            <input type="number" step="any" id="lng-destino" placeholder="Longitud (ej: -76.6010)" />
+        
+        <ul class="nav-menu">
+            <li>
+                <a href="{% url 'evacuacion' %}" class="nav-enlace activo">
+                    <i class="fa-solid fa-house-chimney"></i>
+                    <span>Generalidades</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'panel_coderider' %}" class="nav-enlace">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Panel</span>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <div class="estado-sistema">
+                <span class="punto-verde"></span> Sistema Activo
+            </div>
         </div>
-    </div>
-    <div class="botonera" style="margin-top: 15px;">
-        <button id="btn-trazar-manual" class="btn-mapa btn-verde">Trazar Ruta</button>
-    </div>
-</section>
+    </aside>
 
-        <section class='tarjeta'>
-            <h2>Mapa de Ruta + geolocalización</h2>
-            <div class='botonera'>
-                <button id='btn-ruta' class='btn-mapa btn-verde'>
-                    Mostrar ruta + geolocalización
-                </button>
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="contenido-principal">
+        
+        <!-- HEADER Y ESTADÍSTICAS -->
+        <header class="header-dashboard animar-fade-in">
+            <div class="header-titulos">
+                <h1>Centro de Gestión de Evacuación</h1>
+                <p>Monitoreo sísmico, rutas de evacuación y recursos de emergencia.</p>
             </div>
-            <div id='mapa'></div>
+            <div class="header-icono">
+                <i class="fa-solid fa-tower-observation"></i>
+            </div>
+        </header>
+
+        <!-- NUEVO: PANEL DE ESTADÍSTICAS RÁPIDAS -->
+        <section class="stats-grid animar-fade-in" style="animation-delay: 0.1s;">
+            <div class="stat-card">
+                <div class="stat-icon text-warning"><i class="fa-solid fa-house-crack"></i></div>
+                <div class="stat-info">
+                    <h3>Sismos (7 días)</h3>
+                    <p id="stat-sismos">--</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon text-primary"><i class="fa-solid fa-clipboard-list"></i></div>
+                <div class="stat-info">
+                    <h3>Reportes</h3>
+                    <p>{{ reportes|length }}</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon text-success"><i class="fa-solid fa-satellite-dish"></i></div>
+                <div class="stat-info">
+                    <h3>API USGS</h3>
+                    <p>En Línea</p>
+                </div>
+            </div>
         </section>
 
-        <section class='tarjeta'>
-            <h2>Puntos en mapa</h2>
-            <p id='info-institucion'></p>
-            <div class='botonera'>
-                <button id='btn-puntos' class='btn-mapa btn-azul'>
-                    Mostrar puntos en el mapa
-                </button>
+        <div class="dashboard-grid">
+            
+            <!-- NUEVO: MONITOREO SÍSMICO -->
+            <section class="tarjeta tarjeta-completa animar-slide-up" style="animation-delay: 0.2s;">
+                <div class="tarjeta-header flex-between">
+                    <h2><i class="fa-solid fa-wave-square text-warning"></i> Actividad Sísmica Reciente</h2>
+                    <span class="badge-alerta">Datos en tiempo real (USGS)</span>
+                </div>
+                <div id="panel-sismos" class="sismos-grid">
+                    <!-- Aquí sismos_api.js inyectará los datos -->
+                    <div class="estado-vacio">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        <p>Cargando datos sísmicos...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- IMÁGENES -->
+            <section class="tarjeta animar-slide-up" style="animation-delay: 0.3s;">
+                <div class="tarjeta-header">
+                    <h2><i class="fa-solid fa-images text-primary"></i> Recursos Gráficos</h2>
+                </div>
+                <div class="galeria">
+                    <div class="imagen-contenedor">
+                        <img src="{% static 'recursos/imagenes/fotos/plano.jpg' %}" alt="Plano de evacuación" />
+                    </div>
+                    <div class="imagen-contenedor icono-salida">
+                        <img src="{% static 'recursos/imagenes/iconos/salida.svg' %}" alt="Icono salida" />
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIDEO -->
+            <section class="tarjeta animar-slide-up" style="animation-delay: 0.4s;">
+                <div class="tarjeta-header">
+                    <h2><i class="fa-solid fa-video text-primary"></i> Material Audiovisual</h2>
+                </div>
+                <div class="video-contenedor">
+                    <video controls>
+                        <source src="{% static 'recursos/videos/clips/simulacro.mp4' %}" type="video/mp4" />
+                        <track src="{% static 'recursos/videos/subtitulos/evacuacion.vtt' %}" kind="subtitles" srclang="es" label="Español" />
+                    </video>
+                </div>
+            </section>
+
+            <!-- AUDIO -->
+            <section class="tarjeta animar-slide-up" style="animation-delay: 0.5s;">
+                <div class="tarjeta-header">
+                    <h2><i class="fa-solid fa-volume-high text-primary"></i> Alertas Sonoras</h2>
+                </div>
+                <div class="audio-bloque">
+                    <label><i class="fa-solid fa-bell"></i> Alarma de Evacuación</label>
+                    <audio controls>
+                        <source src="{% static 'recursos/audios/alerta.mp3' %}" type="audio/mp3" />
+                    </audio>
+                </div>
+                <div class="audio-bloque">
+                    <label><i class="fa-solid fa-bullhorn"></i> Mensaje de Ayuda</label>
+                    <audio controls>
+                        <source src="{% static 'recursos/audios/ayuda.mp3' %}" type="audio/mp3" />
+                    </audio>
+                </div>
+            </section>
+
+            <!-- DOCUMENTOS -->
+            <section class="tarjeta animar-slide-up" style="animation-delay: 0.6s;">
+                <div class="tarjeta-header">
+                    <h2><i class="fa-solid fa-folder-open text-primary"></i> Documentación</h2>
+                </div>
+                <div class="documentos-grid">
+                    <a href="{% static 'recursos/documentos/pdf/manual.pdf' %}" target="_blank" class="btn-doc btn-pdf">
+                        <i class="fa-solid fa-file-pdf"></i> Manual PDF
+                    </a>
+                    <a href="{% static 'recursos/documentos/comprimidos/manual.zip' %}" download class="btn-doc btn-zip">
+                        <i class="fa-solid fa-file-zipper"></i> Descargar ZIP
+                    </a>
+                    <a href="{% static 'recursos/datos/tablas/extintores.csv' %}" download class="btn-doc btn-csv">
+                        <i class="fa-solid fa-file-csv"></i> Inventario CSV
+                    </a>
+                    <a href="{% static 'recursos/datos/gps/ruta_evacuacion.gpx' %}" download class="btn-doc btn-gpx">
+                        <i class="fa-solid fa-map-location-dot"></i> Ruta GPX
+                    </a>
+                </div>
+            </section>
+
+            <!-- NUEVO LAYOUT: SUBIR ARCHIVOS + REGISTRO DE REPORTES -->
+            <div class="reportes-layout-container tarjeta-completa animar-slide-up" style="animation-delay: 0.7s;">
+                
+                           <!-- COLUMNA IZQUIERDA: FORMULARIO DE SUBIDA -->
+                <div class="panel-formulario">
+                    <section class="tarjeta">
+                        <div class="tarjeta-header">
+                            <h2><i class="fa-solid fa-cloud-arrow-up text-primary"></i> Cargar Archivos</h2>
+                        </div>
+                        <form method="POST" enctype="multipart/form-data" class="formulario-moderno">
+                            {% csrf_token %}
+                            
+                            <!-- Fila 1: Nombre (Ancho completo) -->
+                            <div class="campo-input full-width">
+                                <label for="{{ form.nombre.id_for_label }}"><i class="fa-solid fa-tag"></i> Nombre</label>
+                                {{ form.nombre }}
+                            </div>
+
+                            <!-- Fila 2: Descripción (Ancho completo, más compacta) -->
+                            <div class="campo-input full-width">
+                                <label for="{{ form.descripcion.id_for_label }}"><i class="fa-solid fa-align-left"></i> Descripción</label>
+                                {{ form.descripcion }}
+                            </div>
+
+                                                      <!-- Fila 3: Archivos (2 columnas compactas) -->
+                            <div class="form-grid-2">
+                                <!-- Foto -->
+                                <div class="campo-input">
+                                    <label><i class="fa-solid fa-image text-success"></i> Foto</label>
+                                    <div class="custom-file-upload" title="Subir imagen">
+                                        {{ form.foto }}
+                                        <i class="fa-solid fa-image"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Documento -->
+                                <div class="campo-input">
+                                    <label><i class="fa-solid fa-file-pdf text-danger"></i> Documento</label>
+                                    <div class="custom-file-upload" title="Subir PDF/DOC">
+                                        {{ form.document }}
+                                        <i class="fa-solid fa-file-arrow-up"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Audio -->
+                                <div class="campo-input">
+                                    <label><i class="fa-solid fa-music text-warning"></i> Audio</label>
+                                    <div class="custom-file-upload" title="Subir audio">
+                                        {{ form.audio }}
+                                        <i class="fa-solid fa-volume-high"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Video -->
+                                <div class="campo-input">
+                                    <label><i class="fa-solid fa-video text-primary"></i> Video</label>
+                                    <div class="custom-file-upload" title="Subir video">
+                                        {{ form.video }}
+                                        <i class="fa-solid fa-film"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-accion btn-submit" style="margin-top: 20px;">
+                                <i class="fa-solid fa-upload"></i> Subir Documento
+                            </button>
+                        </form>
+                    </section>
+                </div>
+
+                <!-- COLUMNA DERECHA: REGISTRO DE REPORTES -->
+                <div class="panel-reportes">
+                    <section class="tarjeta">
+                        <div class="tarjeta-header flex-between">
+                            <h2><i class="fa-solid fa-clipboard-list text-primary"></i> Registro de Reportes</h2>
+                            <span class="badge-alerta">{{ reportes|length }} Reportes</span>
+                        </div>
+                        <div class="reportes-grid-scroll">
+                            <div class="reportes-grid">
+                                {% for r in reportes %}
+                                <div class="reporte-card">
+                                    <div class="reporte-img-contenedor">
+                                        <img src="{{ r.foto.url }}" alt="Foto reporte" />
+                                    </div>
+                                    <div class="reporte-contenido">
+                                        <h3 class="reporte-titulo">{{ r.nombre }}</h3>
+                                        <p class="reporte-desc">{{ r.descripcion }}</p>
+                                        <span class="reporte-fecha"><i class="fa-regular fa-clock"></i> {{ r.fecha|date:'d/m/Y H\:i' }}</span>
+                                        {% if r.document %}
+                                        <a href="{{ r.document.url }}" download class="btn-reporte-doc">
+                                            <i class="fa-solid fa-download"></i> Documento
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <div class="estado-vacio">
+                                    <i class="fa-regular fa-folder-open"></i>
+                                    <p>No hay reportes registrados en este momento.</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
             </div>
-            <div id='lista-puntos' class='lista-puntos'></div>
-        </section>
+
+            <!-- NUEVO LAYOUT: PANEL DE CONTROL + MAPA -->
+            <div class="mapa-layout-container tarjeta-completa animar-slide-up" style="animation-delay: 0.9s;">
+                
+                <!-- COLUMNA IZQUIERDA: PANEL DE CONTROLES -->
+                <div class="panel-controles-ruta">
+                    <section class="tarjeta">
+                        <div class="tarjeta-header flex-between">
+                            <h2><i class="fa-solid fa-route text-primary"></i> Trazar Ruta</h2>
+                            <button id="btn-usar-mi-ubicacion" class="btn-accion btn-sm btn-geoloc-outline">
+                                <i class="fa-solid fa-location-crosshairs"></i> Mi ubicación
+                            </button>
+                        </div>
+
+                        <!-- SECCIÓN DE RUTAS PREDEFINIDAS -->
+                        <div class="rutas-predefinidas-bloque">
+                            <div class="coordenada-header">
+                                <i class="fa-solid fa-map-location-dot text-warning"></i>
+                                <h3>Rutas Predefinidas</h3>
+                            </div>
+                            <p class="info-texto mb-2" style="font-size: 0.85rem;">Seleccione una ruta establecida para cargarla en el mapa.</p>
+                            <div class="select-ruta-group">
+                                <select id="select-ruta-predefinida">
+                                    <option value="">-- Cargando rutas... --</option>
+                                </select>
+                                <button id="btn-cargar-ruta-predefinida" class="btn-accion btn-cargar-predefinida">
+                                    <i class="fa-solid fa-download"></i> Cargar
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- SEPARADOR VISUAL -->
+                        <div class="separador-o">
+                            <span>O Ruta Manual</span>
+                        </div>
+
+                        <!-- BLOQUE DE COORDENADAS MANUALES -->
+                        <div class="grupo-coordenadas" style="flex-direction: column; gap: 12px; padding: 16px;">
+                            <div class="bloque-coordenada" style="width: 100%;">
+                                <div class="coordenada-header">
+                                    <i class="fa-solid fa-location-dot text-blue"></i>
+                                    <h3>Punto de Inicio</h3>
+                                </div>
+                                <div class="campo-input">
+                                    <label>Latitud</label>
+                                    <input type="number" step="any" id="lat-inicio" placeholder="Ej: 2.4419" />
+                                </div>
+                                <div class="campo-input">
+                                    <label>Longitud</label>
+                                    <input type="number" step="any" id="lng-inicio" placeholder="Ej: -76.6063" />
+                                </div>
+                            </div>
+
+                            <div class="bloque-coordenada" style="width: 100%;">
+                                <div class="coordenada-header">
+                                    <i class="fa-solid fa-flag-checkered text-green"></i>
+                                    <h3>Punto de Destino</h3>
+                                </div>
+                                <div class="campo-input">
+                                    <label>Latitud</label>
+                                    <input type="number" step="any" id="lat-destino" placeholder="Ej: 2.4480" />
+                                </div>
+                                <div class="campo-input">
+                                    <label>Longitud</label>
+                                    <input type="number" step="any" id="lng-destino" placeholder="Ej: -76.6010" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="botonera-centrada" style="margin-top: 16px;">
+                            <button id="btn-trazar-manual" class="btn-accion btn-trazar">
+                                <i class="fa-solid fa-map"></i> Generar Ruta Manual
+                            </button>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- COLUMNA DERECHA: MAPA -->
+                <div class="panel-mapa">
+                    <section class="tarjeta">
+                        <div class="tarjeta-header flex-between">
+                            <h2><i class="fa-solid fa-earth-americas text-primary"></i> Mapa de Evacuación</h2>
+                            <button id="btn-ruta" class="btn-accion btn-sm btn-geoloc">
+                                <i class="fa-solid fa-location-crosshairs"></i> Mostrar Ruta GeoJSON
+                            </button>
+                        </div>
+                        <div class="mapa-contenedor">
+                            <div id="mapa"></div>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+
+            <!-- PUNTOS EN EL MAPA -->
+            <section class="tarjeta tarjeta-completa animar-slide-up" style="animation-delay: 1.1s;">
+                <div class="tarjeta-header flex-between">
+                    <h2><i class="fa-solid fa-users-viewfinder text-primary"></i> Puntos de Encuentro</h2>
+                    <button id="btn-puntos" class="btn-accion btn-sm btn-puntos">
+                        <i class="fa-solid fa-map-pin"></i> Cargar Puntos
+                    </button>
+                </div>
+                <div class="info-panel">
+                    <p id="info-institucion" class="info-texto"><i class="fa-solid fa-circle-info"></i> Seleccione cargar puntos para ver la información.</p>
+                </div>
+                <div id="lista-puntos" class="lista-puntos-grid"></div>
+            </section>
+
+        </div>
     </main>
 
+    <!-- SCRIPTS -->
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnMenu = document.getElementById('btn-menu-movil');
+            const btnCerrar = document.getElementById('btn-cerrar-sidebar');
+            const sidebar = document.getElementById('sidebar');
+
+            btnMenu.addEventListener('click', () => sidebar.classList.add('activo'));
+            btnCerrar.addEventListener('click', () => sidebar.classList.remove('activo'));
+        });
+    </script>
+
+    
+
+    <!-- Variables Django a JS -->
+        <script>
         const CSRF_TOKEN = '{{ csrf_token }}';
         const URL_CSV = '{% static "recursos/datos/tablas/extintores.csv" %}';
         const URL_GEO = '{% static "recursos/datos/geo/ruta.geojson" %}';
         const URL_JSON = '{% static "recursos/datos/json/puntos_encuentro.json" %}';
+        // NUEVA LÍNEA:
+        const URL_RUTAS_PREDEFINIDAS = '{% static "recursos/datos/json/rutas_predefinidas.json" %}';
         const URL_API_SISMOS = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson';
     </script>
 
+    <!-- Archivos JavaScript de la App -->
     <script src="{% static 'recursos/libs/leaflet/leaflet.js' %}"></script>
     <script src="{% static 'recursos/scripts/tabla_csv.js' %}"></script>
     <script src="{% static 'recursos/scripts/puntos_encuentro.js' %}"></script>
